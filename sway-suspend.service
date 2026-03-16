@@ -1,0 +1,11 @@
+[Unit]
+Description=Lock the screen on suspend
+Before=sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/7knights/.config/sway/swaylock.sh
+Restart=no
+
+[Install]
+WantedBy=sleep.target

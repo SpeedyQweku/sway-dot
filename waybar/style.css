@@ -5,8 +5,10 @@
 
 /* Main window */
 window#waybar {
-    background-color: #000000; /* solid black background */
-    color: #ffffff; /* default text white */
+    background-color: #000000;
+    /* solid black background */
+    color: #ffffff;
+    /* default text white */
     border-radius: 8px;
     margin: 8px;
     transition: background-color 0.3s;
@@ -15,63 +17,67 @@ window#waybar {
 /* Workspace buttons */
 #workspaces button {
     padding: 0 8px;
-    color: #ffffff; /* white text */
-    background-color: #000000; /* black button */
+    color: #ffffff;
+    /* white text */
+    background-color: #000000;
+    /* black button */
     border-radius: 6px;
     transition: all 0.2s;
 }
 
 #workspaces button.focused {
-    color: #000000; /* black text */
-    background-color: #ffffff; /* white background when focused */
+    color: #000000;
+    /* black text */
+    background-color: #ffffff;
+    /* white background when focused */
 }
 
 #workspaces button.active {
-    color: #ffffff; /* white text */
-    background-color: #222222; /* dark gray for active */
+    color: #ffffff;
+    /* white text */
+    background-color: #222222;
+    /* dark gray for active */
 }
 
 #workspaces button.urgent {
     color: #ffffff;
-    background-color: #ff0000; /* red for urgent */
+    background-color: #ff0000;
+    /* red for urgent */
 }
 
 /* General modules styling */
 #clock,
 #battery,
-#cpu,
-#memory,
-#disk,
 #backlight,
+#custom-mic,
+#custom-dnd,
 #network,
 #pulseaudio,
-#custom-backup,
-#custom-pacman,
-#custom-clear-ram,
 #tray {
     padding: 0 10px;
     border-radius: 6px;
-    background-color: #111111; /* slightly lighter black */
-    color: #ffffff; /* default white text */
+    background-color: #111111;
+    /* slightly lighter black */
+    color: #ffffff;
+    /* default white text */
     margin: 0 2px;
 }
 
 /* Specific module colors for readability */
-#cpu,
-#clock,
-#memory {
+#clock {
     color: #ffffff;
 }
 
 #pulseaudio,
 #backlight,
-#disk,
 #network {
-    color: #cccccc; /* light gray for secondary info */
+    color: #cccccc;
+    /* light gray for secondary info */
 }
 
 #network.disconnected {
-    color: #ff0000; /* red for disconnected */
+    color: #ff0000;
+    /* red for disconnected */
 }
 
 #battery {
@@ -80,25 +86,22 @@ window#waybar {
 
 #battery.warning {
     color: #000000;
-    background-color: #ffff00; /* yellow warning */
+    background-color: #ffff00;
+    /* yellow warning */
 }
 
 #battery.critical {
     color: #ffffff;
-    background-color: #ff0000; /* red critical */
+    background-color: #ff0000;
+    /* red critical */
 }
 
-#custom-backup,
-#custom-pacman,
-#custom-clear-ram {
-    color: #ffffff;
-    background-color: #222222;
-}
 
 /* Tray icons */
 #tray {
     background-color: #000000;
-    color: #ffffff; /* all tray icons monochrome */
+    color: #ffffff;
+    /* all tray icons monochrome */
 }
 
 /* Optional: hover effect for modules */
@@ -106,9 +109,8 @@ window#waybar {
 #tray:hover,
 #clock:hover,
 #battery:hover,
-#cpu:hover,
-#memory:hover,
-#disk:hover,
+#custom-mic:hover,
+#custom-dnd:hover,
 #backlight:hover,
 #network:hover,
 #pulseaudio:hover {

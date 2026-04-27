@@ -4,7 +4,7 @@
 #   - brightnessctl
 #   - libnotify (notify-send)
 
-STEP=5  # percentage
+STEP=1  # percentage
 
 get_brightness() {
     # returns brightness percentage

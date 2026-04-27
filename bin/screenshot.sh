@@ -1,4 +1,5 @@
 #!/bin/bash
+
 case $1 in
     full)
         FILE=~/Pictures/Screenshots/$(date +'%Y-%m-%d-%H%M%S.png')

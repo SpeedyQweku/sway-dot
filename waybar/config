@@ -3,25 +3,24 @@
   "tooltip": false,
   "layer": "top",
   "position": "top",
-  "height": 30,
-  "height": 27,
-  "layer": "top",
   "margin-top": 6,
   "margin-left": 5,
   "margin-bottom": 2,
   "margin-right": 5,
   "spacing": 5,
   "modules-left": [
-    "sway/workspaces"
+    "sway/workspaces",
+    "custom/focused-app"
   ],
   "modules-center": [
     "clock"
   ],
   "modules-right": [
+    "custom/power-profile",
     "backlight",
     "custom/mic",
     "custom/dnd",
-    "pulseaudio",
+    "wireplumber",
     "network",
     "battery",
     "tray"
@@ -46,13 +45,36 @@
     }
   },
   "sway/window": {
-    "format": " {} ",
-    "separate-outputs": true
+    "format": "{app_id}",
+    "max-length": 30,
+    "separate-outputs": false,
+    "tooltip": false,
+    "rewrite": {
+      "org.telegram.desktop": "Telegram",
+      "google-chrome": "Chrome",
+      "google-chrome-stable": "Chrome",
+      "chromium": "Chromium",
+      "org.mozilla.firefox": "Firefox",
+      "firefox": "Firefox",
+      "code": "VS Code",
+      "com.obsproject.Studio": "OBS",
+      "thunar": "Files",
+      "Alacritty": "Alacritty",
+      "org.pwmt.zathura": "Zathura",
+      "com.spotify.Client": "Spotify",
+      "spotify": "Spotify",
+      "discord": "Discord",
+      "mpv": "MPV",
+      "vlc": "VLC",
+      "org.qbittorrent.qBittorrent": "qBittorrent",
+      "steam": "Steam",
+      "obsidian": "Obsidian"
+    }
   },
   "clock": {
-    "format": " {:%I:%M %p}",
-    "format-alt": " {:%a %b %d}",
-    "tooltip": false
+    "format": "{:%a %b %d %I:%M %p}",
+    "tooltip": false,
+    "on-click": "~/.config/sway/bin/calendar-popup.sh"
   },
   "tray": {
     "spacing": 10
@@ -119,6 +141,16 @@
       ]
     }
   },
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "  Muted",
+    "on-click": "pavucontrol",
+    "format-icons": [
+      " ",
+      " ",
+      " "
+    ]
+  },
   "custom/mic": {
     "exec": "pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}' | grep -q 'yes' && echo '󰍭' || echo '󰍬'",
     "interval": 1,
@@ -130,7 +162,19 @@
     "exec": "~/.config/sway/bin/dndstatus.sh",
     "exec-on-event": false,
     "interval": 1,
-    "on-click": "~/.config/sway/bin/togglednd.sh",
+    "on-click": "~/.config/sway/bin/togglednd.sh"
+  },
+  "custom/power-profile": {
+    "format": "Mode: {}",
+    "exec": "~/.config/sway/bin/powerprofilewaybar.sh",
+    "return-type": "json",
+    "interval": 1,
+    "on-click": "~/.config/sway/bin/cycle-powermodes.sh"
+  },
+  "custom/focused-app": {
+    "exec": "~/.config/sway/bin/focused-app.sh",
+    "interval": 1,
+    "format": "{}",
     "tooltip": false
   }
 }

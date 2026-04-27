@@ -51,8 +51,10 @@ window#waybar {
 #backlight,
 #custom-mic,
 #custom-dnd,
+#custom-power-profile,
+#custom-focused-app,
 #network,
-#pulseaudio,
+#wireplumber,
 #tray {
     padding: 0 10px;
     border-radius: 6px;
@@ -68,7 +70,8 @@ window#waybar {
     color: #ffffff;
 }
 
-#pulseaudio,
+/* #pulseaudio, */
+#wireplumber,
 #backlight,
 #network {
     color: #cccccc;
@@ -104,6 +107,7 @@ window#waybar {
     /* all tray icons monochrome */
 }
 
+
 /* Optional: hover effect for modules */
 #workspaces button:hover,
 #tray:hover,
@@ -111,9 +115,11 @@ window#waybar {
 #battery:hover,
 #custom-mic:hover,
 #custom-dnd:hover,
+#custom-power-profile:hover,
+#custom-focused-app:hover,
 #backlight:hover,
 #network:hover,
-#pulseaudio:hover {
+#wireplumber:hover {
     background-color: #333333;
     color: #ffffff;
     transition: background-color 0.2s;

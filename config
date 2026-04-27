@@ -46,20 +46,20 @@ client.urgent           #ff0028 #120000 #ffffff #ff0028 #ff0028
 
 # ===== APPLICATION KEYBINDINGS =====
 bindsym $mod+Return exec $term
-bindsym $mod+p exec ~/.config/sway/bin/monitor.sh
+bindsym $mod+p exec $HOME/.config/sway/bin/monitor.sh
 bindsym $mod+r exec google-chrome-stable
-bindsym $mod+t exec telegram-desktop
+bindsym $mod+t exec Telegram
 bindsym $mod+w exec firefox
 bindsym $mod+u exec discord
 bindsym $mod+e exec thunar
 bindsym $mod+n exec obsidian
 bindsym $mod+y exec code
-bindsym $mod+m exec chromium
-bindsym $mod+b exec spotify
+bindsym $mod+b exec chromium
+bindsym $mod+m exec spotify
 bindsym $mod+v exec caido
-bindsym $mod+x exec copyq show
+bindsym $mod+shift+x exec copyq show
 bindsym $mod+Space exec ulauncher-toggle
-bindsym $mod+shift+d exec ~/.config/sway/bin/togglednd.sh
+bindsym $mod+shift+d exec $HOME/.config/sway/bin/togglednd.sh
 
 # ===== WINDOW MANAGEMENT =====
 bindsym $mod+q kill
@@ -71,14 +71,17 @@ bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+
 # Move windows
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
 # Split directions
 bindsym $mod+Shift+h splith
 bindsym $mod+Shift+v splitv
+
 # Focus parent
 bindsym $mod+Shift+a focus parent
 
@@ -86,11 +89,11 @@ bindsym $mod+Shift+a focus parent
 bindsym $mod+Tab focus next
 bindsym $mod+Shift+Tab focus prev
 floating_modifier $mod normal
+
 # ===== LAYOUTS =====
-bindsym $mod+Shift+s layout stacking
+bindsym $mod+Shift+q layout stacking
 bindsym $mod+Shift+w layout tabbed
 bindsym $mod+Shift+t layout toggle split
-
 
 # ===== WORKSPACE NAMES =====
 set $ws1 "1"
@@ -149,14 +152,14 @@ bindsym $mod+Control+Up move workspace to output up
 bindsym $mod+Control+Down move workspace to output down
 
 # ===== SCREENSHOTS & RECORDING =====
-bindsym Print exec ~/.config/sway/bin/screenshot.sh window
-bindsym Shift+Print exec ~/.config/sway/bin/screenshot.sh select 
-bindsym F6 exec ~/.config/sway/bin/screenshot.sh select 
+bindsym Print exec $HOME/.config/sway/bin/screenshot.sh window
+bindsym Shift+Print exec $HOME/.config/sway/bin/screenshot.sh select 
+bindsym $mod+Shift+S exec $HOME/.config/sway/bin/screenshot.sh select 
 
 # ==== Touchpad & Airplane & Powermodes
-bindsym F12 exec ~/.config/sway/bin/toggle-airplane-mode.sh  
-bindsym F10 exec ~/.config/sway/bin/toggle-touchpad.sh
-bindsym XF86Launch1 exec ~/.config/sway/bin/cycle-powermodes.sh  
+bindsym $mod+F12 exec $HOME/.config/sway/bin/toggle-airplane-mode.sh  
+bindsym XF86TouchpadToggle exec $HOME/.config/sway/bin/toggle-touchpad.sh
+bindsym XF86Launch1 exec $HOME/.config/sway/bin/cycle-powermodes.sh  
 input type:touchpad {
     tap enabled
     natural_scroll enabled
@@ -165,27 +168,29 @@ input type:touchpad {
 
 # ===== SYSTEM KEYBINDINGS =====
 # Volume control
-bindsym XF86AudioRaiseVolume exec ~/.config/sway/bin/volume.sh up
-bindsym XF86AudioLowerVolume exec   ~/.config/sway/bin/volume.sh down
-bindsym XF86AudioMute exec ~/.config/sway/bin/volume.sh toggle
-
-# Mic
-bindsym XF86AudioMicMute exec ~/.config/sway/bin/mictoggle.sh
+bindsym XF86AudioRaiseVolume exec $HOME/.config/sway/bin/volume.sh up
+bindsym XF86AudioLowerVolume exec   $HOME/.config/sway/bin/volume.sh down
+bindsym XF86AudioMute exec $HOME/.config/sway/bin/volume.sh toggle
+bindsym XF86AudioMicMute exec $HOME/.config/sway/bin/mictoggle.sh
 
 # Brightness control
-bindsym XF86MonBrightnessUp exec ~/.config/sway/bin/brightness.sh up
-bindsym XF86MonBrightnessDown exec ~/.config/sway/bin/brightness.sh up
-bindsym F8 exec ~/.config/sway/bin/brightness.sh up
-bindsym F7 exec ~/.config/sway/bin/brightness.sh down
+bindsym XF86MonBrightnessUp exec $HOME/.config/sway/bin/brightness.sh up
+bindsym XF86MonBrightnessDown exec $HOME/.config/sway/bin/brightness.sh down
 
-# Media control
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+# ── Media Controls ────────────────────────────────────────────
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioPause exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
 
-bindsym F4 exec asusctl aura effect --next-mode
-bindsym F2 exec asusctl leds next
-bindsym F3 exec asusctl leds prev 
+# ── Keyboard Backlight Brightness (Fn+F2 / Fn+F3 area) ───────
+# Cycles through: off → low → med → high
+bindsym XF86KbdBrightnessUp exec asusctl leds next
+bindsym XF86KbdBrightnessDown exec asusctl leds prev
+
+# ── Aura RGB Effect Cycling ───────────────────────────────────
+bindsym XF86Launch3 exec asusctl aura effect --next-mode
+bindsym XF86Launch4 exec asusctl aura effect --prev-mode
 
 # Lock screen
 bindsym $mod+Shift+l exec swaylock  -f -i $HOME/.config/sway/wallpaper/chess.png
@@ -218,23 +223,25 @@ exec_always systemctl --user import-environment QT_QPA_PLATFORMTHEME
 exec_always dbus-update-activation-environment --systemd QT_QPA_PLATFORMTHEME=qt5ct
 
 # Assign apps to specific workspaces
-assign [app_id="spotify"] $ws9
+assign [class="Spotify"] $ws9
 assign [class="discord"] $ws8
 assign [app_id="obsidian"] $ws2
 assign [app_id="org.telegram.desktop"] $ws1
 
 # ===== FLOATING WINDOWS =====
-#for_window [app_id="spotify"] floating enable, move position center, resize set 1200 800
+#for_window [class="Spotify"] floating enable, move position center, resize set 1200 800
 for_window [app_id="copyq"] floating enable, resize set 600 600, move position 100% 0 px -600
 for_window [app_id="ulauncher"] floating enable, border none, move position center, move up 200px
 for_window [app_id="org.gnome.FileRoller"] floating enable, move position center
+for_window [app_id="yad"] floating enable, move position center, move up 465px
+#for_window [app_id="yad"] floating enable, move absolute position 50ppt 60px
 #for_window [app_id="org.telegram.desktop"] floating enable, move position center
 #for_window [app_id="thunar"] floating enable, move position center, resize set 1200 800
 
 # ===== AUTOSTART =====
-exec_always ~/.config/sway/bin/workspace-outputs.sh
-exec_always /home/7knights/.config/sway/bin/waybar_start.sh
-exec_always swww-daemon
+exec_always $HOME/.config/sway/bin/workspace-outputs.sh
+exec_always $HOME/.config/sway/bin/waybar_start.sh
+exec_always awww-daemon
 exec_always wl-paste -t text --watch clipman store --no-persis
 exec_always copyq &
 exec_always dunst &
@@ -245,6 +252,13 @@ exec_always libinput-gestures-setup start
 exec rog-control-center &
 exec udiskie --appindicator -t
 
+# Fix disappearing dropdown menus in Java apps (Burp Suite, JADX) under Xwayland
+exec wmname LG3D
+
 # === Screensharing
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
+exec dbus-update-activation-environment --systemd --all
+
+# Restore DND state on login
+exec "if [ -f $HOME/.cache/dnd_state ]; then dunstctl set-paused true; fi"

@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
-# Check current status of Wi-Fi and WWAN
-STATUS=$(nmcli radio all | awk 'NR==2 {print $2}')
 
-if [[ "$STATUS" == "enabled" ]]; then
+NOTIFY_ID=9999  # Fixed ID so notifications replace each other
+
+wifi_status=$(nmcli radio wifi)
+
+if [[ "$wifi_status" == "enabled" ]]; then
     nmcli radio all off
-    echo "Airplane mode: ON"
+    rfkill block bluetooth
+    dunstify -u normal -r "$NOTIFY_ID" -i airplane-mode-symbolic \
+        "Airplane Mode" "ON — all radios disabled"
 else
     nmcli radio all on
-    echo "Airplane mode: OFF"
+    rfkill unblock bluetooth
+    dunstify -u normal -r "$NOTIFY_ID" -i network-wireless-symbolic \
+        "Airplane Mode" "OFF — all radios enabled"
 fi
-

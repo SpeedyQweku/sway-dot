@@ -7,4 +7,4 @@ fi
 
 # Start a new waybar instance
 # In .config/sway/config
- waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css
+waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css

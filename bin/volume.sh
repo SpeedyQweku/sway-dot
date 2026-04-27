@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-STEP=5
+STEP=1
 
 get_volume() {
     pamixer --get-volume

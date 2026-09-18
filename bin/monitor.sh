@@ -75,7 +75,10 @@ case "$CHOICE" in
         swaymsg output "$MAIN" position 0 0
         ;;
     mirror)
-        swaymsg output "$EXTERNAL" enable same-as "$MAIN"
+        RES=$(swaymsg -t get_outputs | jq -r ".[] | select(.name==\"$MAIN\") | .current_mode | \"\(.width)x\(.height)\"")
+        swaymsg output "$EXTERNAL" enable scale 1
+        swaymsg output "$EXTERNAL" resolution "$RES" position 0 0
+        swaymsg output "$MAIN" position 0 0
         ;;
     disconnect)
         swaymsg output "$EXTERNAL" disable

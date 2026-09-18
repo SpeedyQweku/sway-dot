@@ -129,7 +129,6 @@ workspace $ws6 output eDP-1
 workspace $ws7 output eDP-1
 workspace $ws8 output eDP-1
 workspace $ws9 output eDP-1
-
 #workspace $ws10 output HDMI-A-1
 #workspace $ws10 output DP-3 
 
@@ -199,6 +198,9 @@ bindsym $mod+Shift+l exec swaylock  -f -i $HOME/.config/sway/wallpaper/chess.png
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
 
+## cheatsheet 
+bindsym $mod+slash exec $HOME/.config/sway/bin/cheatsheet.sh
+
 # lock
 # ===== RESIZE MODE =====
 mode "resize" {
@@ -221,11 +223,14 @@ exec_always gsettings set $gnome-schema cursor-theme 'Adwaita'
 set $env QT_QPA_PLATFORMTHEME qt5ct
 exec_always systemctl --user import-environment QT_QPA_PLATFORMTHEME
 exec_always dbus-update-activation-environment --systemd QT_QPA_PLATFORMTHEME=qt5ct
+exec_always systemctl --user import-environment WAYLAND_DISPLAY DISPLAY
 
 # Assign apps to specific workspaces
+assign [app_id="google-chrome"] $ws9
+assign [app_id="chromium"] $ws9
 assign [class="Spotify"] $ws9
-assign [class="discord"] $ws8
-assign [app_id="obsidian"] $ws2
+assign [app_id="discord"] $ws8
+assign [app_id="md.obsidian.Obsidian"] $ws2
 assign [app_id="org.telegram.desktop"] $ws1
 
 # ===== FLOATING WINDOWS =====
@@ -234,6 +239,8 @@ for_window [app_id="copyq"] floating enable, resize set 600 600, move position 1
 for_window [app_id="ulauncher"] floating enable, border none, move position center, move up 200px
 for_window [app_id="org.gnome.FileRoller"] floating enable, move position center
 for_window [app_id="yad"] floating enable, move position center, move up 465px
+for_window [title="cheatsheet"] floating enable, move position center
+for_window [class="burp-StartBurp"] floating enable
 #for_window [app_id="yad"] floating enable, move absolute position 50ppt 60px
 #for_window [app_id="org.telegram.desktop"] floating enable, move position center
 #for_window [app_id="thunar"] floating enable, move position center, resize set 1200 800
@@ -253,12 +260,20 @@ exec rog-control-center &
 exec udiskie --appindicator -t
 
 # Fix disappearing dropdown menus in Java apps (Burp Suite, JADX) under Xwayland
-exec wmname LG3D
+exec_always wmname LG3D &
 
-# === Screensharing
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland
+# --- XWayland Video Bridge & Portal Fix & Screensharing---
+# 1. Ensure D-Bus has the exact variables the wlroots portal requires
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland 
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
 exec dbus-update-activation-environment --systemd --all
+
+# 2. Kill any hung portal processes
+#exec killall -9 xdg-desktop-portal xdg-desktop-portal-wlr
+
+# 3. Manually launch the wlroots backend and main portal (Bypassing systemd)
+#exec /usr/lib/xdg-desktop-portal-wlr &
+#exec /usr/lib/xdg-desktop-portal -r &
 
 # Restore DND state on login
 exec "if [ -f $HOME/.cache/dnd_state ]; then dunstctl set-paused true; fi"
